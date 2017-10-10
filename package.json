@@ -1,0 +1,15 @@
+{
+  "name": "Catbook",
+  "version": "1.0.0",
+  "description": "Facebook for cats",
+  "main": "app.js",
+  "author": "6.148 Staff",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "mongoose": "^4.12.1"
+  }
+}
