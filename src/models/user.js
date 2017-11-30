@@ -3,8 +3,9 @@ var mongoose = require('mongoose');
 
 // define a schema
 var UserModelSchema = new mongoose.Schema ({
-  _id         : Schema.Types.ObjectId,
-  username    : String,
+  name        : String,
+  fbid        : String,
+  friends     : [ mongoose.Schema.Types.ObjectId ],
 });
 
 // compile model from schema

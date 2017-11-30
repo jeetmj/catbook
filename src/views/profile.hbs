@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Profile Page</title>
+  </head>
+  <body>
+    {{> navbar}}
+    <h1> Hello, {{username}}</h1>
+    {{#if user}}
+    <form name="story" method="post" action="/story">
+      <input type="text" placeholder="message" name="message">
+      <button type="submit">Submit</button>
+    </form>
+    {{/if}}
+  </body>
+</html>
