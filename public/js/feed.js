@@ -62,10 +62,10 @@ async function renderStories() {
   try {
     storiesDiv = document.getElementById('stories');
 
-    var storiesArr = await get('/stories', '', '');
+    var storiesArr = await get('/api/stories', '', '');
 
     for (var story of storiesArr) {
-      story.comments = await get('/comment', 'parent', story._id);
+      story.comments = await get('/api/comment', 'parent', story._id);
       storiesDiv.appendChild(newStory(await story));
     }
 
