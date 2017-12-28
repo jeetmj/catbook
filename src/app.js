@@ -6,11 +6,17 @@
 var path = require('path');
 
 // webapp specific
-var mongoose = require('mongoose');
-var express = require('express');
 var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
+var http = require('http');
+
+var express = require('express');
 var session = require('express-session');
+// use res.sendFile instead of templates
+var exphbs = require('express-handlebars');
+
+var socketio = require('socket.io');
+
+var mongoose = require('mongoose');
 var passport = require('passport');
 var fbp = require('passport-facebook');
 
@@ -141,6 +147,20 @@ app.use(function(err, req, res, next) {
 
 // port config
 var port = process.env.PORT || 3000; // config variable
-app.listen(port, function() {
+var server = http.Server(app);
+server.listen(port, function() {
   console.log('Server running on port: ' + port);
+});
+
+/*
+ * Socket.io Configurations
+ */
+var io = socketio(server);
+
+io.on('connection', function(socket) {
+  console.log('a user connected');
+
+  socket.on('disconnect', function() {
+    console.log('a user disconnected');
+  });
 });
