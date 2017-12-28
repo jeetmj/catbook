@@ -1,14 +1,14 @@
 // dependencies
-var express = require('express');
-var connect = require('connect-ensure-login');
+const express = require('express');
+const connect = require('connect-ensure-login');
 
 // models
-var User = require('../models/user');
-var Story = require('../models/story');
-var Comment = require('../models/comment');
+const User = require('../models/user');
+const Story = require('../models/story');
+const Comment = require('../models/comment');
 
 
-var router = express.Router();
+const router = express.Router();
 
 // public endpoints
 router.get('/', function(req, res, next) {

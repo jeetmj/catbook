@@ -1,13 +1,13 @@
 // dependencies
-var express = require('express');
-var connect = require('connect-ensure-login');
+const express = require('express');
+const connect = require('connect-ensure-login');
 
 // models
-var User = require('../models/user');
-var Story = require('../models/story');
-var Comment = require('../models/comment');
+const User = require('../models/user');
+const Story = require('../models/story');
+const Comment = require('../models/comment');
 
-var router = express.Router();
+const router = express.Router();
 
 // api endpoints
 router.get('/story', function(req, res) {
@@ -26,7 +26,7 @@ router.post(
     '/story',
     connect.ensureLoggedIn(),
     function(req, res) {
-  var newStory = new Story({
+  const newStory = new Story({
     'owner': req.user._id,
     'message': req.body.message,
   });
@@ -47,7 +47,7 @@ router.post(
     '/comment',
     connect.ensureLoggedIn(),
     function(req, res) {
-  var newComment = new Comment({
+  const newComment = new Comment({
     'owner': req.user._id,
     'parent': req.body.parent,
     'message': req.body.message,

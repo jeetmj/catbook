@@ -1,8 +1,8 @@
 // import node modules
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // define a schema
-var StoryModelSchema = new mongoose.Schema ({
+const StoryModelSchema = new mongoose.Schema ({
   owner       : String,
   message     : String,
   comment_ids : String,

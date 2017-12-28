@@ -1,7 +1,7 @@
-var passport = require('passport');
-var fbp = require('passport-facebook');
+const passport = require('passport');
+const fbp = require('passport-facebook');
 
-var User = require('./models/user');
+const User = require('./models/user');
 
 // set up passport configs
 passport.use(new fbp.Strategy({
@@ -14,7 +14,7 @@ passport.use(new fbp.Strategy({
   }, function(err, user) {
     if (err) { return done(err); }
     if (!user) {
-      user = new User({
+      const user = new User({
         name: profile.displayName,
         fbid: profile.id
       });
