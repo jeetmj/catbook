@@ -17,7 +17,7 @@ function newStory(storyJSON) {
   commentsDiv.className = 'story-comments';
   for (var i=0; i < storyJSON.comments.length; ++i) {
     commentDiv = document.createElement('div');
-    commentDiv.setAttributes('id', storyJSON.comments[i]._id);
+    commentDiv.setAttribute('id', storyJSON.comments[i]._id);
     commentDiv.className = 'comment';
 
     commentOwnerSpan = document.createElement('span');
@@ -58,20 +58,20 @@ function get(endpoint, queryVar, queryVal) {
   });
 }
 
-function renderStories() {
-  storiesDiv = document.getElementById('stories');
+async function renderStories() {
+  try {
+    storiesDiv = document.getElementById('stories');
 
-  return get('/stories', '', '').then(function(stories) {
-    if (stories.length === 0)
-      return Promise.resolve(null);
-    return Promise.all(stories.map(function(story) {
-      storyJSON = story;
-      // sketchy buggy shit happening here
-      storyJSON.comments = get('/comment', 'parent', story._id);
-      storiesDiv.appendChild(newStory(storyJSON));
-    }));
-  });
+    var storiesArr = await get('/stories', '', '');
+
+    for (var story of storiesArr) {
+      story.comments = await get('/comment', 'parent', story._id);
+      storiesDiv.appendChild(newStory(await story));
+    }
+
+  } catch(err) {
+    console.log(err);
+  }
 }
 
 renderStories();
-
