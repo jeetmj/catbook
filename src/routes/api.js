@@ -10,6 +10,16 @@ const Comment = require('../models/comment');
 const router = express.Router();
 
 // api endpoints
+router.get('/whoami', function(req, res) {
+  res.send(req.isAuthenticated() ? req.user : {});
+});
+
+router.get('/user', function(req, res) {
+  User.findOne({ _id: req.query.id }, function(err, user) {
+    res.send(user);
+  });
+})
+
 router.get('/story', function(req, res) {
   Story.findOne({ _id: req.query.id }, function(err, story) {
     res.send(story);
@@ -34,7 +44,7 @@ router.post(
     if (err) console.log(err);
   });
 
-  res.redirect('/u/'+req.user.fbid+'/profile');
+  res.redirect('/');
 });
 
 router.get('/comment', function(req, res) {
@@ -47,6 +57,7 @@ router.post(
     '/comment',
     connect.ensureLoggedIn(),
     function(req, res) {
+  console.log("here");
   const newComment = new Comment({
     'owner': req.user._id,
     'parent': req.body.parent,
@@ -55,8 +66,7 @@ router.post(
   newComment.save(function(err) {
     if (err) console.log(err);
   });
-
-  res.redirect('/u/'+req.user.fbid+'/profile');
+  res.redirect('/');
 });
 
 

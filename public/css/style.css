@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,600');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+.story {
+  padding: 10px 0px;
+}
+.story-owner {
+  font-weight: 600;
+}
+.story-comments {
+  padding: 5px 5px;
+}
+.comment-owner {
+  font-weight: 600;
+}

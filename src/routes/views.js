@@ -12,7 +12,7 @@ const router = express.Router();
 
 // public endpoints
 router.get('/', function(req, res, next) {
-  res.redirect('/feed');
+  res.sendFile('index.html', {root: 'src/views'});
 });
 
 router.get('/login', function(req, res, next) {
@@ -25,11 +25,7 @@ router.get('/login', function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/login');
-});
-
-router.get('/feed', function(req, res) {
-  res.sendFile('feed.html', {root: 'src/views'});
+  res.redirect('/');
 });
 
 router.get('/u/:fbid/profile', function(req, res) {
