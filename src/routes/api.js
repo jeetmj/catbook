@@ -44,7 +44,7 @@ router.post(
     if (err) console.log(err);
   });
 
-  res.redirect('/');
+  res.send({});
 });
 
 router.get('/comment', function(req, res) {
@@ -57,7 +57,6 @@ router.post(
     '/comment',
     connect.ensureLoggedIn(),
     function(req, res) {
-  console.log("here");
   const newComment = new Comment({
     'owner': req.user._id,
     'parent': req.body.parent,
@@ -66,7 +65,8 @@ router.post(
   newComment.save(function(err) {
     if (err) console.log(err);
   });
-  res.redirect('/');
+
+  res.send({});
 });
 
 
