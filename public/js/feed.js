@@ -1,6 +1,6 @@
 function storyDOMObject(storyJSON, user) {
   const storyDiv = document.createElement('div');
-  storyDiv.setAttribute('id', storyJSON.creator_id);
+  storyDiv.setAttribute('id', storyJSON.id);
   storyDiv.className = 'story';
 
   const creatorSpan = document.createElement('span');
@@ -17,7 +17,7 @@ function storyDOMObject(storyJSON, user) {
   commentsDiv.className = 'story-comments';
 
   if (user._id)
-    commentsDiv.appendChild(newCommentDOMObject(storyJSON.creator_id));
+    commentsDiv.appendChild(newCommentDOMObject(storyJSON.id));
 
   storyDiv.appendChild(commentsDiv);
 
@@ -26,7 +26,7 @@ function storyDOMObject(storyJSON, user) {
 
 function commentDOMObject(commentJSON) {
     commentDiv = document.createElement('div');
-    commentDiv.setAttribute('id', commentJSON.creator_id);
+    // commentDiv.setAttribute('id', commentJSON._id);
     commentDiv.className = 'comment';
 
     commentCreatorSpan = document.createElement('span');
@@ -108,12 +108,12 @@ async function renderStories(user) {
     const storiesDiv = document.getElementById('stories');
 
     if (user._id)
-      storiesDiv.appendChild(newStoryDOMObject());
+      storiesDiv.appendChild(newStoryDOMObject()); //todo change name
 
     const storiesArr = await get('/api/stories', '', '');
     for (let story of storiesArr) { //redo this for loop
       storiesDiv.appendChild(storyDOMObject(story, user));
-      const comments = await(get('/api/comment', 'parent', story.creator_id));
+      const comments = await(get('/api/comment', 'parent', story.id));
       for (let comment of comments) {
         const storyDiv = document.getElementById(comment.parent); //todo refactor name
         storyDiv.children[2].appendChild(commentDOMObject(comment));

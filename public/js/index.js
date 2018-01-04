@@ -10,8 +10,8 @@ async function main() {
     });
     socket.on('comment', function(msg){
       console.log(msg);
-      const storiesDiv = document.getElementById('stories');
-      storiesDiv.appendChild(storyDOMObject(msg,user));
+      const parentStory = document.getElementById(msg.parent);
+      parentStory.children[2].appendChild(commentDOMObject(msg));
     });
 }
 

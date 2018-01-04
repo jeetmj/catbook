@@ -41,14 +41,13 @@ router.post(
   function(req, res) {
     User.findOne({_id:req.user._id},function(err,poster) {
       const newStory = new Story({
-        'creator_id': poster.id,
         'creator_name' : poster.name,
         'content': req.body.content,
       });
-      newStory.save(function(err) {
+      newStory.save(function(err,story) { //todo refactor story name
         // configure socketio
         const io = req.app.get('socketio');
-        io.emit("post",{creator_id:poster.id,creator_name:poster.name,content:req.body.content});
+        io.emit("post",{id:story.id,creator_name:poster.name,content:req.body.content});
         if (err) console.log(err);
       });
       res.send({});
@@ -67,7 +66,6 @@ router.post(
     function(req, res) {
       User.findOne({_id: req.user._id}, function (err, commenter) {
         const newComment = new Comment({
-          'creator_id': commenter.id,
           'creator_name':commenter.name,
           'parent': req.body.parent,
           'content': req.body.content,
@@ -75,7 +73,7 @@ router.post(
         newComment.save(function(err) {
           if (err) console.log(err);
           const io = req.app.get('socketio');
-          io.emit("comment",{creator_id:commenter.id, creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
+          io.emit("comment",{creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
         });
         res.send({});
       });
