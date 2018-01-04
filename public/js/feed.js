@@ -55,6 +55,7 @@ function newCommentDOMObject(parent) {
   newCommentMessage.setAttribute('type', 'text');
   newCommentMessage.setAttribute('name', 'message');
   newCommentMessage.setAttribute('placeholder', 'New Comment');
+  newCommentMessage.className = 'form-control';
   newCommentDiv.appendChild(newCommentMessage);
 
   const newCommentParent = document.createElement('input');
@@ -63,10 +64,15 @@ function newCommentDOMObject(parent) {
   newCommentParent.setAttribute('value', parent);
   newCommentDiv.appendChild(newCommentParent);
 
+  const newCommentButtonDiv = document.createElement('div');
+  newCommentButtonDiv.className = 'input-group-append';
+  newCommentDiv.appendChild(newCommentButtonDiv);
+
   const newCommentSubmit = document.createElement('button');
   newCommentSubmit.innerHTML = 'Submit';
+  newCommentSubmit.className = 'btn btn-outline-primary';
   newCommentSubmit.addEventListener('click', submitCommentHandler);
-  newCommentDiv.appendChild(newCommentSubmit);
+  newCommentButtonDiv.appendChild(newCommentSubmit);
 
   return newCommentDiv;
 }
