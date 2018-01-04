@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 
 // define a schema
 const StoryModelSchema = new mongoose.Schema ({
-  creator_name     : String,
-  content     : String,
-  comment_ids : String,
+  creator_id    : String,
+  creator_name  : String,
+  content       : String,
+  comment_ids   : String,
 });
 
 // compile model from schema
