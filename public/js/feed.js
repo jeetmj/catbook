@@ -7,22 +7,22 @@ function storyDOMObject(storyJSON, user) {
   cardBody.className = 'card-body';
   card.appendChild(cardBody);
 
-  const ownerSpan = document.createElement('h5');
-  ownerSpan.className = 'story-owner card-title';
-  ownerSpan.innerHTML = storyJSON.owner + ": ";
-  cardBody.appendChild(ownerSpan);
+  const creatorSpan = document.createElement('h5');
+  creatorSpan.className = 'story-creator card-title';
+  creatorSpan.innerHTML = storyJSON.creator_name + ": ";
+  cardBody.appendChild(creatorSpan);
 
-  const messageSpan = document.createElement('p');
-  messageSpan.className = 'story-message card-text';
-  messageSpan.innerHTML = storyJSON.message;
-  cardBody.appendChild(messageSpan);
+  const contentSpan = document.createElement('p');
+  contentSpan.className = 'story-content card-text';
+  contentSpan.innerHTML = storyJSON.content;
+  cardBody.appendChild(contentSpan);
 
   const commentsDiv = document.createElement('div');
-  commentsDiv.setAttribute('id', storyJSON._id + '-comments');
+  commentsDiv.setAttribute('id', storyJSON.id + '-comments');
   commentsDiv.className = 'story-comments card-footer';
 
   if (user._id)
-    commentsDiv.appendChild(newCommentDOMObject(storyJSON._id));
+    commentsDiv.appendChild(newCommentDOMObject(storyJSON.id));
 
   card.appendChild(commentsDiv);
 
@@ -34,15 +34,15 @@ function commentDOMObject(commentJSON) {
     commentDiv.setAttribute('id', commentJSON._id);
     commentDiv.className = 'comment';
 
-    commentOwnerSpan = document.createElement('span');
-    commentOwnerSpan.className = 'comment-owner';
-    commentOwnerSpan.innerHTML = commentJSON.owner + ": ";
-    commentDiv.appendChild(commentOwnerSpan);
+    commentCreatorSpan = document.createElement('span');
+    commentCreatorSpan.className = 'comment-creator';
+    commentCreatorSpan.innerHTML = commentJSON.creator_name + ": ";
+    commentDiv.appendChild(commentCreatorSpan);
 
-    commentMessageSpan = document.createElement('span');
-    commentMessageSpan.className = 'comment-message';
-    commentMessageSpan.innerHTML = commentJSON.message;
-    commentDiv.appendChild(commentMessageSpan);
+    commentContentSpan = document.createElement('span');
+    commentContentSpan.className = 'comment-content';
+    commentContentSpan.innerHTML = commentJSON.content;
+    commentDiv.appendChild(commentContentSpan);
 
     return commentDiv;
 }
@@ -51,12 +51,12 @@ function newCommentDOMObject(parent) {
   const newCommentDiv = document.createElement('div');
   newCommentDiv.className = 'comment input-group mb-3';
 
-  const newCommentMessage = document.createElement('input');
-  newCommentMessage.setAttribute('type', 'text');
-  newCommentMessage.setAttribute('name', 'message');
-  newCommentMessage.setAttribute('placeholder', 'New Comment');
-  newCommentMessage.className = 'form-control';
-  newCommentDiv.appendChild(newCommentMessage);
+  const newCommentContent = document.createElement('input');
+  newCommentContent.setAttribute('type', 'text');
+  newCommentContent.setAttribute('name', 'content');
+  newCommentContent.setAttribute('placeholder', 'New Comment');
+  newCommentContent.className = 'form-control';
+  newCommentDiv.appendChild(newCommentContent);
 
   const newCommentParent = document.createElement('input');
   newCommentParent.setAttribute('type', 'hidden');
@@ -81,8 +81,8 @@ function submitCommentHandler() {
   const newCommentDiv = this.parentElement;
   const storyDiv = newCommentDiv.parentElement.parentElement;
   const data = {
-    message: newCommentDiv.children[0].value,
-    owner: storyDiv.id
+    content: newCommentDiv.children[0].value,
+    parent: storyDiv.id
   };
   post('/api/comment', data);
   newCommentDiv.children[0].value = '';
@@ -92,11 +92,11 @@ function newStoryDOMObject() {
   const newStoryDiv = document.createElement('div');
   newStoryDiv.className = 'input-group my-3';
 
-  const newStoryMessage = document.createElement('input');
-  newStoryMessage.setAttribute('type', 'text');
-  newStoryMessage.setAttribute('placeholder', 'New Story');
-  newStoryMessage.className = 'form-control';
-  newStoryDiv.appendChild(newStoryMessage);
+  const newStoryContent = document.createElement('input');
+  newStoryContent.setAttribute('type', 'text');
+  newStoryContent.setAttribute('placeholder', 'New Story');
+  newStoryContent.className = 'form-control';
+  newStoryDiv.appendChild(newStoryContent);
 
   const newStoryButtonDiv = document.createElement('div');
   newStoryButtonDiv.className = 'input-group-append';
@@ -114,7 +114,7 @@ function newStoryDOMObject() {
 function submitStoryHandler() {
   const newStoryDiv = this.parentElement;
   const data = {
-    message: newStoryDiv.children[0].value,
+    content: newStoryDiv.children[0].value,
   };
   post('/api/story', data);
   newStoryDiv.children[0].value = '';
