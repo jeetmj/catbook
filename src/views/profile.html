@@ -4,10 +4,24 @@
     <title>Profile Page</title>
   </head>
   <body>
-    <h1>Hello</h1>
-    <form name="story" method="post" action="/story">
-      <input type="text" placeholder="message" name="message">
-      <button type="submit">Submit</button>
-    </form>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="navbar-brand">Catbook</div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav" id="nav-item-container">
+          <!-- navbar items are inserted here -->
+        </div>
+      </div>
+    </nav>
+    <div class="container feed-container">
+      <h1>Hello</h1>      
+    </div>
   </body>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/navbar.js"></script>
+  <script src="/static/js/index.js"></script>
 </html>

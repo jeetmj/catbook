@@ -1,4 +1,5 @@
 function storyDOMObject(storyJSON, user) {
+  console.log(storyJSON);
   const card = document.createElement('div');
   card.setAttribute('id', storyJSON._id);
   card.className = 'story card';
