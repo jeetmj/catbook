@@ -6,12 +6,12 @@ async function main() {
     socket.on('post', function(msg){
         console.log(msg);
         const storiesDiv = document.getElementById('stories');
-        storiesDiv.appendChild(storyDOMObject(msg,user));
+        storiesDiv.prepend(storyDOMObject(msg,user));
     });
     socket.on('comment', function(msg){
       console.log(msg);
       const commentDiv = document.getElementById(msg.parent + '-comments')
-      commentDiv.appendChild(commentDOMObject(msg));
+      commentDiv.prepend(commentDOMObject(msg));
     });
 }
 
