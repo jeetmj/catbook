@@ -11,7 +11,7 @@ async function main() {
     socket.on('comment', function(msg){
       console.log(msg);
       const commentDiv = document.getElementById(msg.parent + '-comments')
-      commentDiv.prepend(commentDOMObject(msg));
+      commentDiv.appendChild(commentDOMObject(msg));
     });
 }
 

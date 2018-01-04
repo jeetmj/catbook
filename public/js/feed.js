@@ -18,11 +18,11 @@ function storyDOMObject(storyJSON, user) {
   cardBody.appendChild(contentSpan);
 
   const commentsDiv = document.createElement('div');
-  commentsDiv.setAttribute('id', storyJSON.id + '-comments');
+  commentsDiv.setAttribute('id', storyJSON._id + '-comments');
   commentsDiv.className = 'story-comments card-footer';
 
   if (user._id)
-    commentsDiv.appendChild(newCommentDOMObject(storyJSON.id));
+    commentsDiv.appendChild(newCommentDOMObject(storyJSON._id));
 
   card.appendChild(commentsDiv);
 
@@ -32,7 +32,7 @@ function storyDOMObject(storyJSON, user) {
 function commentDOMObject(commentJSON) {
     commentDiv = document.createElement('div');
     commentDiv.setAttribute('id', commentJSON._id);
-    commentDiv.className = 'comment';
+    commentDiv.className = 'comment my-2';
 
     commentCreatorSpan = document.createElement('span');
     commentCreatorSpan.className = 'comment-creator';
@@ -49,12 +49,13 @@ function commentDOMObject(commentJSON) {
 
 function newCommentDOMObject(parent) {
   const newCommentDiv = document.createElement('div');
-  newCommentDiv.className = 'comment input-group mb-3';
+  newCommentDiv.className = 'comment input-group';
 
   const newCommentContent = document.createElement('input');
   newCommentContent.setAttribute('type', 'text');
   newCommentContent.setAttribute('name', 'content');
   newCommentContent.setAttribute('placeholder', 'New Comment');
+  newCommentContent.setAttribute('id', parent + '-comment-input');
   newCommentContent.className = 'form-control';
   newCommentDiv.appendChild(newCommentContent);
 
@@ -71,6 +72,7 @@ function newCommentDOMObject(parent) {
   const newCommentSubmit = document.createElement('button');
   newCommentSubmit.innerHTML = 'Submit';
   newCommentSubmit.className = 'btn btn-outline-primary';
+  newCommentSubmit.setAttribute('story-id', parent);
   newCommentSubmit.addEventListener('click', submitCommentHandler);
   newCommentButtonDiv.appendChild(newCommentSubmit);
 
@@ -78,15 +80,15 @@ function newCommentDOMObject(parent) {
 }
 
 function submitCommentHandler() {
-  const newCommentDiv = this.parentElement;
   console.log(this);
-  const storyDiv = newCommentDiv.parentElement.parentElement;
+  const commentInput = document.getElementById(this.getAttribute('story-id') + '-comment-input');
+  console.log(this.getAttribute('story-id'));
   const data = {
-    content: newCommentDiv.children[0].value,
-    parent: storyDiv.id
+    content: commentInput.value,
+    parent: this.getAttribute('story-id')
   };
   post('/api/comment', data);
-  newCommentDiv.children[0].value = '';
+  commentInput.value = '';
 }
 
 function newStoryDOMObject() {
@@ -135,6 +137,7 @@ async function renderStories(user) {
       storiesDiv.prepend(storyDOMObject(story, user));
       const comments = await(get('/api/comment', 'parent', story.id));
       for (let comment of comments) {
+        console.log(comment);
         const commentDiv = document.getElementById(comment.parent + '-comments')
         commentDiv.appendChild(commentDOMObject(comment));
       }
