@@ -9,7 +9,9 @@ async function main() {
         storiesDiv.appendChild(storyDOMObject(msg,user));
     });
     socket.on('comment', function(msg){
-        console.log(msg);
+      console.log(msg);
+      const storiesDiv = document.getElementById('stories');
+      storiesDiv.appendChild(storyDOMObject(msg,user));
     });
 }
 

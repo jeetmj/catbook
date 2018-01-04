@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // set up mongoDB connection
-const mongoURL = 'mongodb://admin:password@ds121535.mlab.com:21535/catbookdb'; // config variable
+const mongoURL = 'mongodb://admin:password@ds237707.mlab.com:37707/catbookdb'; // config variable
 const options = {
   useMongoClient: true
 };

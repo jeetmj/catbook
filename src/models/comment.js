@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 
 // define a schema
 const CommentModelSchema = new mongoose.Schema ({
-  owner       : String,
+  creator_id    : String,
+  creator_name  : String,
   parent      : String,
-  message     : String,
+  content     : String,
 });
 
 // compile model from schema

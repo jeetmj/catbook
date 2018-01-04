@@ -18,13 +18,13 @@ router.get('/user', function(req, res) {
   User.findOne({ _id: req.query.id }, function(err, user) {
     res.send(user);
   });
-})
+});
 
 router.get('/story', function(req, res) {
   Story.findOne({ _id: req.query.id }, function(err, story) {
-      User.findOne({_id:story.owner},function(err,owner)
+      User.findOne({_id:story.id},function(err,creator)
       {
-          res.send({_id:owner.id,owner:owner.name,message:story.message});
+          res.send({creator_id:creator.id,creator_name:creator.name,content:story.content});
       })
   });
 });
@@ -36,24 +36,23 @@ router.get('/stories', function(req, res) {
 });
 
 router.post(
-    '/story',
-    connect.ensureLoggedIn(),
-    function(req, res) {
+  '/story',
+  connect.ensureLoggedIn(),
+  function(req, res) {
+    User.findOne({_id:req.user._id},function(err,poster) {
       const newStory = new Story({
-        'owner': req.user._id,
-        'message': req.body.message,
+        'creator_id': poster.id,
+        'creator_name' : poster.name,
+        'content': req.body.content,
       });
       newStory.save(function(err) {
-          // configure socketio
-          const io = req.app.get('socketio');
-          User.findOne({_id:req.user._id},function(err,owner)
-          {
-              io.emit("post",{_id:owner.id,owner:owner.name,message:req.body.message});
-          });
+        // configure socketio
+        const io = req.app.get('socketio');
+        io.emit("post",{creator_id:poster.id,creator_name:poster.name,content:req.body.content});
         if (err) console.log(err);
       });
-
       res.send({});
+    });
 });
 
 router.get('/comment', function(req, res) {
@@ -66,19 +65,20 @@ router.post(
     '/comment',
     connect.ensureLoggedIn(),
     function(req, res) {
-  const newComment = new Comment({
-    'owner': req.user._id,
-    'parent': req.body.parent,
-    'message': req.body.message,
-  });
-  newComment.save(function(err) {
-    if (err) console.log(err);
-    const io = req.app.get('socketio');
-    io.emit("comment",{owner:req.user._id ,parent: req.body.parent, message:req.body.message});
-  });
-
-  res.send({});
-});
-
+      User.findOne({_id: req.user._id}, function (err, commenter) {
+        const newComment = new Comment({
+          'creator_id': commenter.id,
+          'creator_name':commenter.name,
+          'parent': req.body.parent,
+          'content': req.body.content,
+        });
+        newComment.save(function(err) {
+          if (err) console.log(err);
+          const io = req.app.get('socketio');
+          io.emit("comment",{creator_id:commenter.id, creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
+        });
+        res.send({});
+      });
+    });
 module.exports = router;
 
