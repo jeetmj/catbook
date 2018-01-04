@@ -1,11 +1,7 @@
 function storyDOMObject(storyJSON, user) {
-  const storyDiv = document.createElement('div');
-  storyDiv.setAttribute('id', storyJSON._id);
-  storyDiv.className = 'story';
-
   const card = document.createElement('div');
-  card.className = 'card';
-  storyDiv.appendChild(card);
+  card.setAttribute('id', storyJSON._id);
+  card.className = 'story card';
 
   const cardBody = document.createElement('div');
   cardBody.className = 'card-body';
@@ -28,9 +24,9 @@ function storyDOMObject(storyJSON, user) {
   if (user._id)
     commentsDiv.appendChild(newCommentDOMObject(storyJSON._id));
 
-  storyDiv.appendChild(commentsDiv);
+  card.appendChild(commentsDiv);
 
-  return storyDiv;
+  return card;
 }
 
 function commentDOMObject(commentJSON) {
@@ -53,7 +49,7 @@ function commentDOMObject(commentJSON) {
 
 function newCommentDOMObject(parent) {
   const newCommentDiv = document.createElement('div');
-  newCommentDiv.className = 'comment';
+  newCommentDiv.className = 'comment input-group mb-3';
 
   const newCommentMessage = document.createElement('input');
   newCommentMessage.setAttribute('type', 'text');
@@ -88,17 +84,23 @@ function submitCommentHandler() {
 
 function newStoryDOMObject() {
   const newStoryDiv = document.createElement('div');
-  newStoryDiv.className = 'story';
+  newStoryDiv.className = 'input-group my-3';
 
   const newStoryMessage = document.createElement('input');
   newStoryMessage.setAttribute('type', 'text');
   newStoryMessage.setAttribute('placeholder', 'New Story');
+  newStoryMessage.className = 'form-control';
   newStoryDiv.appendChild(newStoryMessage);
+
+  const newStoryButtonDiv = document.createElement('div');
+  newStoryButtonDiv.className = 'input-group-append';
+  newStoryDiv.appendChild(newStoryButtonDiv);
 
   const newStorySubmit = document.createElement('button');
   newStorySubmit.innerHTML = 'Submit';
+  newStorySubmit.className = 'btn btn-outline-primary';
   newStorySubmit.addEventListener('click', submitStoryHandler);
-  newStoryDiv.appendChild(newStorySubmit);
+  newStoryButtonDiv.appendChild(newStorySubmit);
 
   return newStoryDiv;
 }
@@ -114,10 +116,11 @@ function submitStoryHandler() {
 
 async function renderStories(user) {
   try {
-    const storiesDiv = document.getElementById('stories');
 
     if (user._id)
-      storiesDiv.appendChild(newStoryDOMObject());
+      document.getElementById('new-story').appendChild(newStoryDOMObject());
+
+    const storiesDiv = document.getElementById('stories');
 
     const storiesArr = await get('/api/stories', '', '');
     for (let story of storiesArr) {

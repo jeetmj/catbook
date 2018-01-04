@@ -1,19 +1,16 @@
 function newNavbarItem(text, url) {
-  item = document.createElement('div');
 
   itemLink = document.createElement('a');
-  itemLink.className = 'navbar-item';
+  itemLink.className = 'nav-item nav-link';
   itemLink.innerHTML = text;
-  itemLink.href= url;
+  itemLink.href = url;
 
-  item.appendChild(itemLink);
-
-  return item
+  return itemLink
 }
 
 async function renderNavbar(user) {
   try {
-    const navbarDiv = document.getElementById('navbar');
+    const navbarDiv = document.getElementById('nav-item-container');
 
 
     navbarDiv.appendChild(newNavbarItem('Home', '/'));

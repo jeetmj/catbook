@@ -6,27 +6,28 @@
     <link rel="stylesheet" href="/static/css/style.css">
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div id="navbar" class="col">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Catbook</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav" id="nav-item-container">
+          <!-- navbar items are inserted here -->
         </div>
-        <div id="stories" class="col-9">
-
-          <!-- <div id="sample" class="story">
-            <span class="story-owner">Ben: </span>
-            <span class="story-message">Foo bar baz</span>
-            <div class="story-comments">
-              <div class="comment">
-                <span class="comment-owner">Alice: </span>
-                <span class="comment-message">Baz bar foo</span>
-              </div>
-              <div class="comment">
-                <span class="comment-owner">Eve: </span>
-                <span class="comment-message">Bar baz foo</span>
-              </div>
-            </div>
-          </div> -->
-
+      </div>
+    </nav>
+    <div class="container feed-container">
+      <div class="row">
+        <div class="col">
+          <form id="new-story">
+            <!-- new story input inserted here -->
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div id="stories" class="col">
+          <!-- stories are inserted here -->
         </div>
       </div>
     </div>
@@ -37,6 +38,9 @@
   <script src="/static/js/navbar.js"></script>
   <script src="/static/js/feed.js"></script>
   <script src="/static/js/index.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script> -->
   <script>
     var socket = io();
   </script>

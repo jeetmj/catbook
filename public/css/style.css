@@ -6,14 +6,18 @@ body {
 }
 
 .story {
-  padding: 10px 0px;
+  margin: 10px 0px;
 }
 .story-owner {
-  font-weight: 600;
+  
 }
 .story-comments {
-  padding: 5px 5px;
+  
 }
 .comment-owner {
-  font-weight: 600;
+  
+}
+
+.feed-container {
+	padding: 1rem 0;
 }
