@@ -6,16 +6,20 @@ body {
 }
 
 .story {
-  margin: 10px 0px;
+	margin: 10px 0px;
 }
 .story-creator {
-  font-weight: 600;
+  	font-size: 20px;
+  	font-weight: 600;
+}
+.story-content {
+	font-size: 40px;
 }
 .story-comments {
-  
+
 }
 .comment-creator {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 .feed-container {

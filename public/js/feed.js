@@ -1,5 +1,4 @@
 function storyDOMObject(storyJSON, user) {
-  console.log(storyJSON);
   const card = document.createElement('div');
   card.setAttribute('id', storyJSON._id);
   card.className = 'story card';
@@ -8,9 +7,10 @@ function storyDOMObject(storyJSON, user) {
   cardBody.className = 'card-body';
   card.appendChild(cardBody);
 
-  const creatorSpan = document.createElement('h5');
+  const creatorSpan = document.createElement('a');
   creatorSpan.className = 'story-creator card-title';
-  creatorSpan.innerHTML = storyJSON.creator_name + ": ";
+  creatorSpan.innerHTML = storyJSON.creator_name;
+  creatorSpan.setAttribute('href', '/u/' + storyJSON.creator_id + '/profile');
   cardBody.appendChild(creatorSpan);
 
   const contentSpan = document.createElement('p');
@@ -35,14 +35,15 @@ function commentDOMObject(commentJSON) {
     commentDiv.setAttribute('id', commentJSON._id);
     commentDiv.className = 'comment my-2';
 
-    commentCreatorSpan = document.createElement('span');
+    commentCreatorSpan = document.createElement('a');
     commentCreatorSpan.className = 'comment-creator';
-    commentCreatorSpan.innerHTML = commentJSON.creator_name + ": ";
+    commentCreatorSpan.innerHTML = commentJSON.creator_name;
+    commentCreatorSpan.setAttribute('href', '/u/' + commentJSON.creator_id + '/profile');
     commentDiv.appendChild(commentCreatorSpan);
 
     commentContentSpan = document.createElement('span');
     commentContentSpan.className = 'comment-content';
-    commentContentSpan.innerHTML = commentJSON.content;
+    commentContentSpan.innerHTML = ' | ' + commentJSON.content;
     commentDiv.appendChild(commentContentSpan);
 
     return commentDiv;
