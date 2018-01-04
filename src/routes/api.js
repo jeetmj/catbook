@@ -70,10 +70,10 @@ router.post(
           'parent': req.body.parent,
           'content': req.body.content,
         });
-        newComment.save(function(err) {
+        newComment.save(function(err,comment) {
           if (err) console.log(err);
           const io = req.app.get('socketio');
-          io.emit("comment",{creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
+          io.emit("comment",{id:comment.id,creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
         });
         res.send({});
       });
