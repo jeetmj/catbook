@@ -1,29 +1,34 @@
 function storyDOMObject(storyJSON, user) {
   const storyDiv = document.createElement('div');
   storyDiv.setAttribute('id', storyJSON._id);
-  storyDiv.className = 'card story';
+  storyDiv.className = 'story';
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  storyDiv.appendChild(card);
 
   const cardBody = document.createElement('div');
   cardBody.className = 'card-body';
-  storyDiv.appendChild(cardBody);
+  card.appendChild(cardBody);
 
   const ownerSpan = document.createElement('h5');
-  ownerSpan.className = 'card-title story-owner';
+  ownerSpan.className = 'story-owner card-title';
   ownerSpan.innerHTML = storyJSON.owner + ": ";
   cardBody.appendChild(ownerSpan);
 
   const messageSpan = document.createElement('p');
-  messageSpan.className = 'story-message';
+  messageSpan.className = 'story-message card-text';
   messageSpan.innerHTML = storyJSON.message;
   cardBody.appendChild(messageSpan);
 
   const commentsDiv = document.createElement('div');
-  commentsDiv.className = 'story-comments';
+  commentsDiv.setAttribute('id', storyJSON._id + '-comments');
+  commentsDiv.className = 'story-comments card-footer';
 
   if (user._id)
     commentsDiv.appendChild(newCommentDOMObject(storyJSON._id));
 
-  cardBody.appendChild(commentsDiv);
+  storyDiv.appendChild(commentsDiv);
 
   return storyDiv;
 }
@@ -117,13 +122,14 @@ async function renderStories(user) {
     const storiesArr = await get('/api/stories', '', '');
     for (let story of storiesArr) {
       story.owner = (await get('api/user', 'id', story.owner)).name;
-      storiesDiv.appendChild(storyDOMObject(await story, user));
+      storiesDiv.prepend(storyDOMObject(await story, user));
 
       const comments = await(get('/api/comment', 'parent', story._id));
       for (let comment of comments) {
         const storyDiv = document.getElementById(comment.parent);
         comment.owner = (await get('/api/user', 'id', comment.owner)).name;
-        storyDiv.children[2].appendChild(commentDOMObject(await comment));
+        const commentDiv = document.getElementById(comment.parent + '-comments')
+        commentDiv.appendChild(commentDOMObject(await comment));
       }
     }
 
