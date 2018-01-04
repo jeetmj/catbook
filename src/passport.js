@@ -5,9 +5,9 @@ const User = require('./models/user');
 
 // set up passport configs
 passport.use(new fbp.Strategy({
-  clientID: "124533098186894", // config variables
-  clientSecret: "240eb909b6c01098a18f7ec01c63a66d",
-  callbackURL: "http://localhost:3000/auth/facebook/callback"
+    clientID: "1783717201933159", // config variables
+    clientSecret: "9ed4fe148172cd10d034bf8008d2fe23",
+    callbackURL: "http://localhost:3000/auth/facebook/callback"
 }, function(accessToken, refreshToken, profile, done) {
   User.findOne({
     'fbid': profile.id
