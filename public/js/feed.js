@@ -33,7 +33,7 @@ function storyDOMObject(storyJSON, user) {
 function commentDOMObject(commentJSON) {
     commentDiv = document.createElement('div');
     commentDiv.setAttribute('id', commentJSON._id);
-    commentDiv.className = 'comment my-2';
+    commentDiv.className = 'comment mt-2';
 
     commentCreatorSpan = document.createElement('a');
     commentCreatorSpan.className = 'comment-creator';
