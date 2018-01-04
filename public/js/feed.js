@@ -135,10 +135,9 @@ async function renderStories(user) {
     const storiesArr = await get('/api/stories', '', '');
     for (let story of storiesArr) { //redo this for loop
       storiesDiv.prepend(storyDOMObject(story, user));
-      const comments = await(get('/api/comment', 'parent', story.id));
+      const comments = await(get('/api/comment', 'parent', story._id));
       for (let comment of comments) {
-        console.log(comment);
-        const commentDiv = document.getElementById(comment.parent + '-comments')
+        const commentDiv = document.getElementById(comment.parent + '-comments');
         commentDiv.appendChild(commentDOMObject(comment));
       }
     }
