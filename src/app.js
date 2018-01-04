@@ -19,6 +19,7 @@ const app = express();
 const socketio = require('socket.io');
 const server = http.Server(app);
 const io = socketio(server);
+app.set('socketio', io);
 
 // set POST request body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,7 +42,7 @@ app.use(passport.session());
 
 // set routes
 app.use('/', views);
-app.use('/api', api, );
+app.use('/api', api );
 app.use('/static', express.static('public'));
 
 // authentication routes

@@ -1,4 +1,6 @@
 function storyDOMObject(storyJSON, user) {
+  console.log(storyJSON);
+  console.log(user);
   const storyDiv = document.createElement('div');
   storyDiv.setAttribute('id', storyJSON._id);
   storyDiv.className = 'story';
@@ -112,8 +114,7 @@ async function renderStories(user) {
 
     const storiesArr = await get('/api/stories', '', '');
     for (let story of storiesArr) {
-      story.owner = (await get('api/user', 'id', story.owner)).name;
-      storiesDiv.appendChild(storyDOMObject(await story, user));
+      storiesDiv.appendChild(storyDOMObject(story, user));
 
       const comments = await(get('/api/comment', 'parent', story._id));
       for (let comment of comments) {
