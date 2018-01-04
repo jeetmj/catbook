@@ -36,15 +36,20 @@ router.post(
     '/story',
     connect.ensureLoggedIn(),
     function(req, res) {
-  const newStory = new Story({
-    'owner': req.user._id,
-    'message': req.body.message,
-  });
-  newStory.save(function(err) {
-    if (err) console.log(err);
-  });
+      const newStory = new Story({
+        'owner': req.user._id,
+        'message': req.body.message,
+      });
+      newStory.save(function(err) {
+          // configure socketio
+          console.log(":(")
+          io.on('connection', function(socket) {
+              console.log('bing bang BONG');
+          });
+        if (err) console.log(err);
+      });
 
-  res.send({});
+      res.send({});
 });
 
 router.get('/comment', function(req, res) {
