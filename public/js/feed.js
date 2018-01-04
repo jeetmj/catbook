@@ -31,7 +31,7 @@ function storyDOMObject(storyJSON, user) {
 
 function commentDOMObject(commentJSON) {
     commentDiv = document.createElement('div');
-    commentDiv.setAttribute('id', commentJSON._id);
+    // commentDiv.setAttribute('id', commentJSON._id);
     commentDiv.className = 'comment';
 
     commentCreatorSpan = document.createElement('span');
@@ -79,6 +79,7 @@ function newCommentDOMObject(parent) {
 
 function submitCommentHandler() {
   const newCommentDiv = this.parentElement;
+  console.log(this);
   const storyDiv = newCommentDiv.parentElement.parentElement;
   const data = {
     content: newCommentDiv.children[0].value,
@@ -96,6 +97,7 @@ function newStoryDOMObject() {
   newStoryContent.setAttribute('type', 'text');
   newStoryContent.setAttribute('placeholder', 'New Story');
   newStoryContent.className = 'form-control';
+  newStoryContent.setAttribute('id', 'story-content-input')
   newStoryDiv.appendChild(newStoryContent);
 
   const newStoryButtonDiv = document.createElement('div');
@@ -112,12 +114,12 @@ function newStoryDOMObject() {
 }
 
 function submitStoryHandler() {
-  const newStoryDiv = this.parentElement;
+  const newStoryInput = document.getElementById('story-content-input');
   const data = {
-    content: newStoryDiv.children[0].value,
+    content: newStoryInput.value,
   };
   post('/api/story', data);
-  newStoryDiv.children[0].value = '';
+  newStoryInput.value = '';
 }
 
 async function renderStories(user) {
@@ -129,16 +131,12 @@ async function renderStories(user) {
     const storiesDiv = document.getElementById('stories');
 
     const storiesArr = await get('/api/stories', '', '');
-    for (let story of storiesArr) {
-      story.owner = (await get('api/user', 'id', story.owner)).name;
-      storiesDiv.prepend(storyDOMObject(await story, user));
-
-      const comments = await(get('/api/comment', 'parent', story._id));
+    for (let story of storiesArr) { //redo this for loop
+      storiesDiv.prepend(storyDOMObject(story, user));
+      const comments = await(get('/api/comment', 'parent', story.id));
       for (let comment of comments) {
-        const storyDiv = document.getElementById(comment.parent);
-        comment.owner = (await get('/api/user', 'id', comment.owner)).name;
         const commentDiv = document.getElementById(comment.parent + '-comments')
-        commentDiv.appendChild(commentDOMObject(await comment));
+        commentDiv.appendChild(commentDOMObject(comment));
       }
     }
 

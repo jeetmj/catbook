@@ -3,7 +3,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
-const socketio = require('socket.io');
+
 
 // local dependencies
 const db = require('./db');
@@ -15,6 +15,11 @@ const api = require('./routes/api');
 // initialize express app
 const app = express();
 
+// configure socketio
+const socketio = require('socket.io');
+const server = http.Server(app);
+const io = socketio(server);
+app.set('socketio', io);
 
 // set POST request body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,7 +42,7 @@ app.use(passport.session());
 
 // set routes
 app.use('/', views);
-app.use('/api', api);
+app.use('/api', api );
 app.use('/static', express.static('public'));
 
 // authentication routes
@@ -67,19 +72,9 @@ app.use(function(err, req, res, next) {
 
 // port config
 const port = process.env.PORT || 3000; // config variable
-const server = http.Server(app);
+// const server = http.Server(app);
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
 
 
-// configure socketio
-const io = socketio(server);
-
-io.on('connection', function(socket) {
-  console.log('a user connected');
-
-  socket.on('disconnect', function() {
-    console.log('a user disconnected');
-  });
-});

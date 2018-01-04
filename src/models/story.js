@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 
 // define a schema
 const StoryModelSchema = new mongoose.Schema ({
-  owner       : String,
-  message     : String,
+  creator_name     : String,
+  content     : String,
   comment_ids : String,
 });
 

@@ -8,14 +8,14 @@ body {
 .story {
   margin: 10px 0px;
 }
-.story-owner {
-  
+.story-creator {
+  font-weight: 600;
 }
 .story-comments {
   
 }
-.comment-owner {
-  
+.comment-creator {
+  font-weight: 600;
 }
 
 .feed-container {
