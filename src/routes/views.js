@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
   if(req.isAuthenticated()) {
-    res.redirect('/u/'+req.user.fbid+'/profile');
+    res.redirect('/u/profile?'+req.user.fbid);
   } else {
     res.sendFile('login.html', {root: 'src/views'});
   }
@@ -28,7 +28,7 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-router.get('/u/:fbid/profile', function(req, res) {
+router.get('/u/profile?:fbid', function(req, res) {
   res.sendFile('profile.html', {root: 'src/views'});
 });
 

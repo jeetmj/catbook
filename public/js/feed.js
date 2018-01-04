@@ -10,7 +10,7 @@ function storyDOMObject(storyJSON, user) {
   const creatorSpan = document.createElement('a');
   creatorSpan.className = 'story-creator card-title';
   creatorSpan.innerHTML = storyJSON.creator_name;
-  creatorSpan.setAttribute('href', '/u/' + storyJSON.creator_id + '/profile');
+  creatorSpan.setAttribute('href', '/u/profile?'+storyJSON.creator_id);
   cardBody.appendChild(creatorSpan);
 
   const contentSpan = document.createElement('p');
@@ -38,7 +38,7 @@ function commentDOMObject(commentJSON) {
     commentCreatorSpan = document.createElement('a');
     commentCreatorSpan.className = 'comment-creator';
     commentCreatorSpan.innerHTML = commentJSON.creator_name;
-    commentCreatorSpan.setAttribute('href', '/u/' + commentJSON.creator_id + '/profile');
+    commentCreatorSpan.setAttribute('href', '/u/profile?'+commentJSON.creator_id);
     commentDiv.appendChild(commentCreatorSpan);
 
     commentContentSpan = document.createElement('span');
