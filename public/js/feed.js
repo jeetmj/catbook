@@ -1,17 +1,21 @@
 function storyDOMObject(storyJSON, user) {
   const storyDiv = document.createElement('div');
   storyDiv.setAttribute('id', storyJSON._id);
-  storyDiv.className = 'story';
+  storyDiv.className = 'card story';
 
-  const ownerSpan = document.createElement('span');
-  ownerSpan.className = 'story-owner';
+  const cardBody = document.createElement('div');
+  cardBody.className = 'card-body';
+  storyDiv.appendChild(cardBody);
+
+  const ownerSpan = document.createElement('h5');
+  ownerSpan.className = 'card-title story-owner';
   ownerSpan.innerHTML = storyJSON.owner + ": ";
-  storyDiv.appendChild(ownerSpan);
+  cardBody.appendChild(ownerSpan);
 
-  const messageSpan = document.createElement('span');
+  const messageSpan = document.createElement('p');
   messageSpan.className = 'story-message';
   messageSpan.innerHTML = storyJSON.message;
-  storyDiv.appendChild(messageSpan);
+  cardBody.appendChild(messageSpan);
 
   const commentsDiv = document.createElement('div');
   commentsDiv.className = 'story-comments';
@@ -19,7 +23,7 @@ function storyDOMObject(storyJSON, user) {
   if (user._id)
     commentsDiv.appendChild(newCommentDOMObject(storyJSON._id));
 
-  storyDiv.appendChild(commentsDiv);
+  cardBody.appendChild(commentsDiv);
 
   return storyDiv;
 }
