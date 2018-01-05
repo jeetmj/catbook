@@ -11,9 +11,14 @@ const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
 
+// fixes cors issue for accessing apis
+const cors = require('cors');
 
 // initialize express app
 const app = express();
+
+// cors set up
+app.use(cors());
 
 // configure socketio
 const socketio = require('socket.io');
