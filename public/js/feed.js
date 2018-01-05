@@ -18,14 +18,17 @@ function storyDOMObject(storyJSON, user) {
   contentSpan.innerHTML = storyJSON.content;
   cardBody.appendChild(contentSpan);
 
+  const cardFooter = document.createElement('div');
+  cardFooter.className = 'card-footer';
+  card.appendChild(cardFooter);
+
   const commentsDiv = document.createElement('div');
   commentsDiv.setAttribute('id', storyJSON._id + '-comments');
-  commentsDiv.className = 'story-comments card-footer';
+  commentsDiv.className = 'story-comments';
+  cardFooter.appendChild(commentsDiv);
 
   if (user._id)
-    commentsDiv.appendChild(newCommentDOMObject(storyJSON._id));
-
-  card.appendChild(commentsDiv);
+    cardFooter.appendChild(newCommentDOMObject(storyJSON._id));
 
   return card;
 }
@@ -33,7 +36,7 @@ function storyDOMObject(storyJSON, user) {
 function commentDOMObject(commentJSON) {
     commentDiv = document.createElement('div');
     commentDiv.setAttribute('id', commentJSON._id);
-    commentDiv.className = 'comment mt-2';
+    commentDiv.className = 'comment mb-2';
 
     commentCreatorSpan = document.createElement('a');
     commentCreatorSpan.className = 'comment-creator';
