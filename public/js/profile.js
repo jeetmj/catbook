@@ -20,3 +20,5 @@ function renderUserData(user) {
 }
 
 main();
+
+// things to add: cat pictures (choice), last post, favorite cat fact (text input), save button
