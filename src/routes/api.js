@@ -45,12 +45,17 @@ router.post(
         'creator_name' : poster.name,
         'content': req.body.content,
       });
-      newStory.save(function(err,story) { //todo refactor story name
+
+      poster.set({last_post:req.body.content});
+      poster.save(); //todo does below code need to be in callback of this code? compeltely unreliant on it...
+
+      newStory.save(function(err,story) {
         // configure socketio
         const io = req.app.get('socketio');
         io.emit("post",{_id:story.id,creator_id:poster.id,creator_name:poster.name,content:req.body.content});
         if (err) console.log(err);
       });
+
       res.send({});
     });
 });

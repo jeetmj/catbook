@@ -72,7 +72,7 @@ app.use(function(err, req, res, next) {
 
 // port config
 const port = process.env.PORT || 3000; // config variable
-// const server = http.Server(app);
+// const server = http.Server(app); use same server variable we have above
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
