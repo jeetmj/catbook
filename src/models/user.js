@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const UserModelSchema = new mongoose.Schema ({
   name        : String,
   fbid        : String,
-  friends     : [ mongoose.Schema.Types.ObjectId ],
+  last_post   : String,
+  favorite_fact : String
 });
 
 // compile model from schema

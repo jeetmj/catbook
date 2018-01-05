@@ -18,11 +18,14 @@ router.get('/user', function(req, res) {
   User.findOne({ _id: req.query.id }, function(err, user) {
     res.send(user);
   });
-})
+});
 
 router.get('/story', function(req, res) {
   Story.findOne({ _id: req.query.id }, function(err, story) {
-    res.send(story);
+      User.findOne({_id:story.id},function(err,creator)
+      {
+          res.send({creator_id:creator.id,creator_name:creator.name,content:story.content});
+      })
   });
 });
 
@@ -33,18 +36,28 @@ router.get('/stories', function(req, res) {
 });
 
 router.post(
-    '/story',
-    connect.ensureLoggedIn(),
-    function(req, res) {
-  const newStory = new Story({
-    'owner': req.user._id,
-    'message': req.body.message,
-  });
-  newStory.save(function(err) {
-    if (err) console.log(err);
-  });
+  '/story',
+  connect.ensureLoggedIn(),
+  function(req, res) {
+    User.findOne({_id:req.user._id},function(err,poster) {
+      const newStory = new Story({
+        'creator_id' : poster.id,
+        'creator_name' : poster.name,
+        'content': req.body.content,
+      });
 
-  res.send({});
+      poster.set({last_post:req.body.content});
+      poster.save(); //todo does below code need to be in callback of this code? compeltely unreliant on it...
+
+      newStory.save(function(err,story) {
+        // configure socketio
+        const io = req.app.get('socketio');
+        io.emit("post",{_id:story.id,creator_id:poster.id,creator_name:poster.name,content:req.body.content});
+        if (err) console.log(err);
+      });
+
+      res.send({});
+    });
 });
 
 router.get('/comment', function(req, res) {
@@ -57,17 +70,20 @@ router.post(
     '/comment',
     connect.ensureLoggedIn(),
     function(req, res) {
-  const newComment = new Comment({
-    'owner': req.user._id,
-    'parent': req.body.parent,
-    'message': req.body.message,
-  });
-  newComment.save(function(err) {
-    if (err) console.log(err);
-  });
-
-  res.send({});
-});
-
-
+      User.findOne({_id: req.user._id}, function (err, commenter) {
+        const newComment = new Comment({
+          'creator_id' : commenter.id,
+          'creator_name':commenter.name,
+          'parent': req.body.parent,
+          'content': req.body.content,
+        });
+        newComment.save(function(err,comment) {
+          if (err) console.log(err);
+          const io = req.app.get('socketio');
+          io.emit("comment",{_id:comment.id,creator_id:commenter.id,creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
+        });
+        res.send({});
+      });
+    });
 module.exports = router;
+

@@ -4,29 +4,32 @@
     <title>News Feed</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div id="navbar" class="col">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="navbar-brand" href="#">Catbook</div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav" id="nav-item-container">
+          <!-- navbar items are inserted here -->
         </div>
-        <div id="stories" class="col-9">
-
-          <div id="sample" class="story">
-            <span class="story-owner">Ben: </span>
-            <span class="story-message">Foo bar baz</span>
-            <div class="story-comments">
-              <div class="comment">
-                <span class="comment-owner">Alice: </span>
-                <span class="comment-message">Baz bar foo</span>
-              </div>
-              <div class="comment">
-                <span class="comment-owner">Eve: </span>
-                <span class="comment-message">Bar baz foo</span>
-              </div>
-            </div>
-          </div>
-
+      </div>
+    </nav>
+    <div class="container feed-container">
+      <div class="row">
+        <div class="col">
+          <form id="new-story">
+            <!-- new story input inserted here -->
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div id="stories" class="col">
+          <!-- stories are inserted here -->
         </div>
       </div>
     </div>
@@ -37,14 +40,4 @@
   <script src="/static/js/navbar.js"></script>
   <script src="/static/js/feed.js"></script>
   <script src="/static/js/index.js"></script>
-  <script>
-    var socket = io();
-  </script>
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.173.0.min.js"></script>
-  <script>
-    function getHtml(template) {
-      return template.join('\n');
-    }
-    listAlbums();
-  </script>
 </html>

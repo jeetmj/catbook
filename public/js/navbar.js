@@ -1,25 +1,22 @@
 function newNavbarItem(text, url) {
-  item = document.createElement('div');
 
   itemLink = document.createElement('a');
-  itemLink.className = 'navbar-item';
+  itemLink.className = 'nav-item nav-link';
   itemLink.innerHTML = text;
-  itemLink.href= url;
+  itemLink.href = url;
 
-  item.appendChild(itemLink);
-
-  return item
+  return itemLink
 }
 
 async function renderNavbar(user) {
   try {
-    const navbarDiv = document.getElementById('navbar');
+    const navbarDiv = document.getElementById('nav-item-container');
 
 
     navbarDiv.appendChild(newNavbarItem('Home', '/'));
     // NOTE: this check is a lowkey hack
     if (user._id) {
-      navbarDiv.appendChild(newNavbarItem('Profile', '/u/'+user.fbid+'/profile'));
+      navbarDiv.appendChild(newNavbarItem('Profile', '/u/profile?'+user._id));
       navbarDiv.appendChild(newNavbarItem('Logout', '/logout'));
     } else {
       navbarDiv.appendChild(newNavbarItem('Login', '/auth/facebook'));
