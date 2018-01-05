@@ -36,7 +36,7 @@ function storyDOMObject(storyJSON, user) {
 function commentDOMObject(commentJSON) {
     commentDiv = document.createElement('div');
     commentDiv.setAttribute('id', commentJSON._id);
-    commentDiv.className = 'comment mb-2';
+    commentDiv.className = 'comment';
 
     commentCreatorSpan = document.createElement('a');
     commentCreatorSpan.className = 'comment-creator';
@@ -61,7 +61,6 @@ function newCommentDOMObject(parent) {
   newCommentContent.setAttribute('name', 'content');
   newCommentContent.setAttribute('placeholder', 'New Comment');
   newCommentContent.setAttribute('id', parent + '-comment-input');
-  newCommentContent.className = 'form-control';
   newCommentDiv.appendChild(newCommentContent);
 
   const newCommentParent = document.createElement('input');
@@ -71,12 +70,10 @@ function newCommentDOMObject(parent) {
   newCommentDiv.appendChild(newCommentParent);
 
   const newCommentButtonDiv = document.createElement('div');
-  newCommentButtonDiv.className = 'input-group-append';
   newCommentDiv.appendChild(newCommentButtonDiv);
 
   const newCommentSubmit = document.createElement('button');
   newCommentSubmit.innerHTML = 'Submit';
-  newCommentSubmit.className = 'btn btn-outline-primary';
   newCommentSubmit.setAttribute('story-id', parent);
   newCommentSubmit.addEventListener('click', submitCommentHandler);
   newCommentButtonDiv.appendChild(newCommentSubmit);
@@ -98,22 +95,18 @@ function submitCommentHandler() {
 
 function newStoryDOMObject() {
   const newStoryDiv = document.createElement('div');
-  newStoryDiv.className = 'input-group my-3';
 
   const newStoryContent = document.createElement('input');
   newStoryContent.setAttribute('type', 'text');
   newStoryContent.setAttribute('placeholder', 'New Story');
-  newStoryContent.className = 'form-control';
   newStoryContent.setAttribute('id', 'story-content-input')
   newStoryDiv.appendChild(newStoryContent);
 
   const newStoryButtonDiv = document.createElement('div');
-  newStoryButtonDiv.className = 'input-group-append';
   newStoryDiv.appendChild(newStoryButtonDiv);
 
   const newStorySubmit = document.createElement('button');
   newStorySubmit.innerHTML = 'Submit';
-  newStorySubmit.className = 'btn btn-outline-primary';
   newStorySubmit.addEventListener('click', submitStoryHandler);
   newStoryButtonDiv.appendChild(newStorySubmit);
 

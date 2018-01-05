@@ -1,7 +1,6 @@
 function newNavbarItem(text, url) {
 
   itemLink = document.createElement('a');
-  itemLink.className = 'nav-item nav-link';
   itemLink.innerHTML = text;
   itemLink.href = url;
 
