@@ -57,3 +57,20 @@ div.circle-avatar{
 .large-profile-container {
 	padding: 0 35%;
 }
+
+.card {
+	max-width: 100%;
+	border-style: solid;
+	border-width: 1px;
+	padding: 10px;
+	border-radius: 5px;
+	transition: 300ms;
+}
+
+.card:hover {
+	background-color: #eaeaea;
+}
+
+h1 {
+	color: blue;
+}
