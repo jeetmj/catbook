@@ -16,7 +16,7 @@ async function renderNavbar(user) {
     navbarDiv.appendChild(newNavbarItem('Home', '/'));
     // NOTE: this check is a lowkey hack
     if (user._id) {
-      navbarDiv.appendChild(newNavbarItem('Profile', '/u/'+user.fbid+'/profile'));
+      navbarDiv.appendChild(newNavbarItem('Profile', '/u/profile?'+user._id));
       navbarDiv.appendChild(newNavbarItem('Logout', '/logout'));
     } else {
       navbarDiv.appendChild(newNavbarItem('Login', '/auth/facebook'));

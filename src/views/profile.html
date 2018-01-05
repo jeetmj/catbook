@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Profile Page</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
   </head>
   <body>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -17,11 +19,18 @@
         </div>
       </div>
     </nav>
-    <div class="container feed-container">
-      <h1>Hello</h1>      
+    <div class="container text-center" id="profile-container">
+      <div class="large-profile-container text-center my-4">
+        <div class="circle-avatar" id="profile-image"></div>
+      </div>
+      <hr>
+      <div id="name-container">
+
+      </div>
+      <div class="text-secondary">I love cats!</div>
     </div>
   </body>
   <script src="/static/js/api.js"></script>
   <script src="/static/js/navbar.js"></script>
-  <script src="/static/js/index.js"></script>
+  <script src="/static/js/profile.js"></script>
 </html>
