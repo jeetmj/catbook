@@ -10,7 +10,7 @@ function storyDOMObject(storyJSON, user) {
   const creatorSpan = document.createElement('a');
   creatorSpan.className = 'story-creator card-title';
   creatorSpan.innerHTML = storyJSON.creator_name;
-  creatorSpan.setAttribute('href', '/u/profile?'+storyJSON.creator_id);
+  creatorSpan.setAttribute('href', '/u/profile?' + storyJSON.creator_id);
   cardBody.appendChild(creatorSpan);
 
   const contentSpan = document.createElement('p');
@@ -34,22 +34,22 @@ function storyDOMObject(storyJSON, user) {
 }
 
 function commentDOMObject(commentJSON) {
-    commentDiv = document.createElement('div');
-    commentDiv.setAttribute('id', commentJSON._id);
-    commentDiv.className = 'comment mb-2';
+  commentDiv = document.createElement('div');
+  commentDiv.setAttribute('id', commentJSON._id);
+  commentDiv.className = 'comment mb-2';
 
-    commentCreatorSpan = document.createElement('a');
-    commentCreatorSpan.className = 'comment-creator';
-    commentCreatorSpan.innerHTML = commentJSON.creator_name;
-    commentCreatorSpan.setAttribute('href', '/u/profile?'+commentJSON.creator_id);
-    commentDiv.appendChild(commentCreatorSpan);
+  commentCreatorSpan = document.createElement('a');
+  commentCreatorSpan.className = 'comment-creator';
+  commentCreatorSpan.innerHTML = commentJSON.creator_name;
+  commentCreatorSpan.setAttribute('href', '/u/profile?' + commentJSON.creator_id);
+  commentDiv.appendChild(commentCreatorSpan);
 
-    commentContentSpan = document.createElement('span');
-    commentContentSpan.className = 'comment-content';
-    commentContentSpan.innerHTML = ' | ' + commentJSON.content;
-    commentDiv.appendChild(commentContentSpan);
+  commentContentSpan = document.createElement('span');
+  commentContentSpan.className = 'comment-content';
+  commentContentSpan.innerHTML = ' | ' + commentJSON.content;
+  commentDiv.appendChild(commentContentSpan);
 
-    return commentDiv;
+  return commentDiv;
 }
 
 function newCommentDOMObject(parent) {
@@ -85,13 +85,13 @@ function newCommentDOMObject(parent) {
 }
 
 function submitCommentHandler() {
-  console.log(this);
   const commentInput = document.getElementById(this.getAttribute('story-id') + '-comment-input');
-  console.log(this.getAttribute('story-id'));
+
   const data = {
     content: commentInput.value,
     parent: this.getAttribute('story-id')
   };
+
   post('/api/comment', data);
   commentInput.value = '';
 }
@@ -122,9 +122,11 @@ function newStoryDOMObject() {
 
 function submitStoryHandler() {
   const newStoryInput = document.getElementById('story-content-input');
+
   const data = {
     content: newStoryInput.value,
   };
+
   post('/api/story', data);
   newStoryInput.value = '';
 }

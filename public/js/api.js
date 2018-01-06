@@ -41,4 +41,3 @@ function post(endpoint, params) {
     xhr.send(data);
   });
 }
-
