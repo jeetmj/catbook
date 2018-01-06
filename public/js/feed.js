@@ -131,19 +131,22 @@ function submitStoryHandler() {
 
 async function renderStories(user) {
   try {
-
     if (user._id)
       document.getElementById('new-story').appendChild(newStoryDOMObject());
 
     const storiesDiv = document.getElementById('stories');
-
     const storiesArr = await get('/api/stories', '', '');
-    for (let story of storiesArr) { //redo this for loop
-      storiesDiv.prepend(storyDOMObject(story, user));
-      const comments = await(get('/api/comment', 'parent', story._id));
-      for (let comment of comments) {
-        const commentDiv = document.getElementById(comment.parent + '-comments');
-        commentDiv.appendChild(commentDOMObject(comment));
+
+    for (let i = 0; i < storiesArr.length; i++) {
+      const currentStory = storiesArr[i];
+      storiesDiv.prepend(storyDOMObject(currentStory, user));
+
+      const commentsArr = await(get('/api/comment', 'parent', currentStory._id));
+
+      for (let j = 0; j < commentsArr.length; j++) {
+        const currentComment = commentsArr[j];
+        const commentDiv = document.getElementById(currentComment.parent + '-comments');
+        commentDiv.appendChild(commentDOMObject(currentComment));
       }
     }
 

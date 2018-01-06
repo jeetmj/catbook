@@ -15,16 +15,16 @@ router.get('/whoami', function(req, res) {
 });
 
 router.get('/user', function(req, res) {
-  User.findOne({ _id: req.query.id }, function(err, user) {
+  User.findOne({ _id: req.query._id }, function(err, user) {
     res.send(user);
   });
 });
 
 router.get('/story', function(req, res) {
-  Story.findOne({ _id: req.query.id }, function(err, story) {
-      User.findOne({_id:story.id},function(err,creator)
+  Story.findOne({ _id: req.query._id }, function(err, story) {
+      User.findOne({_id:story._id},function(err,creator)
       {
-          res.send({creator_id:creator.id,creator_name:creator.name,content:story.content});
+          res.send({creator_id:creator._id,creator_name:creator.name,content:story.content});
       })
   });
 });
@@ -41,7 +41,7 @@ router.post(
   function(req, res) {
     User.findOne({_id:req.user._id},function(err,poster) {
       const newStory = new Story({
-        'creator_id' : poster.id,
+        'creator_id' : poster._id,
         'creator_name' : poster.name,
         'content': req.body.content,
       });
@@ -52,7 +52,7 @@ router.post(
       newStory.save(function(err,story) {
         // configure socketio
         const io = req.app.get('socketio');
-        io.emit("post",{_id:story.id,creator_id:poster.id,creator_name:poster.name,content:req.body.content});
+        io.emit("post",{_id:story._id,creator_id:poster._id,creator_name:poster.name,content:req.body.content});
         if (err) console.log(err);
       });
 
@@ -72,7 +72,7 @@ router.post(
     function(req, res) {
       User.findOne({_id: req.user._id}, function (err, commenter) {
         const newComment = new Comment({
-          'creator_id' : commenter.id,
+          'creator_id' : commenter._id,
           'creator_name':commenter.name,
           'parent': req.body.parent,
           'content': req.body.content,
@@ -80,7 +80,7 @@ router.post(
         newComment.save(function(err,comment) {
           if (err) console.log(err);
           const io = req.app.get('socketio');
-          io.emit("comment",{_id:comment.id,creator_id:commenter.id,creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
+          io.emit("comment",{_id:comment._id,creator_id:commenter._id,creator_name:commenter.name, parent: req.body.parent, content:req.body.content});
         });
         res.send({});
       });

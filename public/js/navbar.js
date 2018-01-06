@@ -12,7 +12,6 @@ async function renderNavbar(user) {
   try {
     const navbarDiv = document.getElementById('nav-item-container');
 
-
     navbarDiv.appendChild(newNavbarItem('Home', '/'));
     // NOTE: this check is a lowkey hack
     if (user._id) {
