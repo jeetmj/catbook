@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
 
-
 // local dependencies
 const db = require('./db');
 const passport = require('./passport');
@@ -30,7 +29,6 @@ app.set('socketio', io);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 // set up sessions
 app.use(session({
   // TODO: fix secret
@@ -39,11 +37,9 @@ app.use(session({
   saveUninitialized: 'true'
 }));
 
-
 // hook up passport
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // set routes
 app.use('/', views);
@@ -53,10 +49,16 @@ app.use('/static', express.static('public'));
 // authentication routes
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
-app.get( '/auth/facebook/callback', passport.authenticate(
-      'facebook', { failureRedirect: '/' }), function(req, res) {
-  res.redirect('/');
-});
+app.get(
+  '/auth/facebook/callback',
+  passport.authenticate(
+    'facebook',
+    { failureRedirect: '/' }
+  ),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
 
 // 404 route
 app.use(function(req, res, next) {
@@ -74,12 +76,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 // port config
 const port = process.env.PORT || 3000; // config variable
 // const server = http.Server(app); use same server variable we have above
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
-
-

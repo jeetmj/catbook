@@ -21,11 +21,13 @@ function renderUserData(user) {
 
 	// rendering latest post
 	const latestPostCard = document.getElementById('latest-post-card');
+
   	const creatorSpan = document.createElement('a');
   	creatorSpan.className = 'story-creator card-title';
   	creatorSpan.innerHTML = user.name;
   	creatorSpan.setAttribute('href', '/u/profile?'+user._id);
   	latestPostCard.appendChild(creatorSpan);
+
 	const latestPost = document.createElement('p');
 	latestPost.className = 'story-content card-text';
   	latestPost.innerHTML = user.last_post;

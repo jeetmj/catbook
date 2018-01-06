@@ -7,19 +7,18 @@ const User = require('../models/user');
 const Story = require('../models/story');
 const Comment = require('../models/comment');
 
-
 const router = express.Router();
 
 // public endpoints
 router.get('/', function(req, res, next) {
-  res.sendFile('index.html', {root: 'src/views'});
+  res.sendFile('index.html', { root: 'src/views' });
 });
 
 router.get('/login', function(req, res, next) {
-  if(req.isAuthenticated()) {
-    res.redirect('/u/profile?'+req.user.fbid);
+  if (req.isAuthenticated()) {
+    res.redirect('/u/profile?' + req.user.fbid);
   } else {
-    res.sendFile('login.html', {root: 'src/views'});
+    res.sendFile('login.html', { root: 'src/views' });
   }
 });
 
@@ -29,8 +28,7 @@ router.get('/logout', function(req, res) {
 });
 
 router.get('/u/profile?:fbid', function(req, res) {
-  res.sendFile('profile.html', {root: 'src/views'});
+  res.sendFile('profile.html', { root: 'src/views' });
 });
-
 
 module.exports = router;
