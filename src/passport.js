@@ -12,14 +12,17 @@ passport.use(new fbp.Strategy({
   User.findOne({
     'fbid': profile._id
   }, function(err, user) {
-    if (err) { return done(err); }
+    if (err) return done(err);
+
     if (!user) {
       const user = new User({
         name: profile.displayName,
         fbid: profile._id
       });
+
       user.save(function(err) {
         if (err) console.log(err);
+
         return done(err, user);
       });
     } else {

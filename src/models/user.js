@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 
 // define a schema
 const UserModelSchema = new mongoose.Schema ({
-  name        : String,
-  fbid        : String,
-  last_post   : String,
-  favorite_fact : String
+  name        	: String,
+  fbid        	: String,
+  last_post   	: String,
+  favorite_fact : String,
 });
 
 // compile model from schema
