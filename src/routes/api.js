@@ -50,7 +50,7 @@ router.post(
       });
 
       user.set({ last_post: req.body.content });
-      user.save(); //todo does below code need to be in callback of this code? compeltely unreliant on it...
+      user.save(); //this is OK! the lines below this don't rely on the state of the user, so they don't have to be shoved in a callback.
 
       newStory.save(function(err,story) {
         // configure socketio
