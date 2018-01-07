@@ -10,14 +10,14 @@ passport.use(new fbp.Strategy({
   callbackURL: "http://localhost:3000/auth/facebook/callback"
 }, function(accessToken, refreshToken, profile, done) {
   User.findOne({
-    'fbid': profile._id
+    'fbid': profile.id
   }, function(err, user) {
     if (err) return done(err);
 
     if (!user) {
       const user = new User({
         name: profile.displayName,
-        fbid: profile._id
+        fbid: profile.id
       });
 
       user.save(function(err) {
