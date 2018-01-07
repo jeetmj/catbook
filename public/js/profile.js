@@ -3,7 +3,7 @@ async function main() {
   await renderNavbar(user);
 
   const profileId = window.location.search.substring(1);
-  const profileUser = await get('/api/user', 'id', profileId);
+  const profileUser = await get('/api/user', '_id', profileId);
 
   renderUserData(profileUser);
 }
