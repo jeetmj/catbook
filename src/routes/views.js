@@ -27,7 +27,7 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-router.get('/u/profile?:fbid', function(req, res) {
+router.get('/u/profile', function(req, res) {
   res.sendFile('profile.html', { root: 'src/views' });
 });
 
