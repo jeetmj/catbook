@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
-const socketio = require('socket.io');
 
 
 // local dependencies
@@ -73,13 +72,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// configure socketio
-const server = http.Server(app);
-const io = socketio(server);
-app.set('socketio', io);
-
 // port config
 const port = process.env.PORT || 3000; // config variable
+const server = http.Server(app);
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });

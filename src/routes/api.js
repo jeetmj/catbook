@@ -50,18 +50,10 @@ router.post(
       });
 
       user.set({ last_post: req.body.content });
-      user.save(); //todo does below code need to be in callback of this code? compeltely unreliant on it...
+      user.save(); // this is OK, because the following lines of code are not reliant on the state of user, so we don't have to shove them in a callback. 
 
       newStory.save(function(err,story) {
         // configure socketio
-        const io = req.app.get('socketio');
-        io.emit("post", {
-          _id: story._id,
-          creator_id: user._id,
-          creator_name: user.name,
-          content: req.body.content
-        });
-
         if (err) console.log(err);
       });
 
@@ -90,15 +82,6 @@ router.post(
 
       newComment.save(function(err, comment) {
         if (err) console.log(err);
-
-        const io = req.app.get('socketio');
-        io.emit("comment", {
-          _id: comment._id,
-          creator_id: user._id,
-          creator_name: user.name,
-          parent: req.body.parent,
-          content: req.body.content
-        });
       });
 
       res.send({});
