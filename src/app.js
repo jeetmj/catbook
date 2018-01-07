@@ -1,6 +1,3 @@
-// load env variables
-require('dotenv').config();
-
 // libraries
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -28,7 +25,7 @@ app.use(cors());
 
 // set up sessions
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: 'session-secret',
   resave: 'false',
   saveUninitialized: 'true'
 }));
@@ -73,7 +70,7 @@ app.use(function(err, req, res, next) {
 });
 
 // port config
-const port = process.env.PORT || 3000; // config variable
+const port = 3000; // config variable
 const server = http.Server(app);
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
