@@ -1,11 +1,13 @@
-async function main() {
-  const user = await get('/api/whoami', '', '');
-  await renderNavbar(user);
-
+function main() {
   const profileId = window.location.search.substring(1);
-  const profileUser = await get('/api/user', '_id', profileId);
+  get('/api/user', {'_id': profileId}, function(profileUser) {
+    renderUserData(profileUser);
+  });
+  get('/api/whoami', {}, function(user) {
+    renderNavbar(user);
+  });
 
-  renderUserData(profileUser);
+
 }
 
 function renderUserData(user) {
@@ -22,18 +24,16 @@ function renderUserData(user) {
 	// rendering latest post
 	const latestPostCard = document.getElementById('latest-post-card');
 
-  	const creatorSpan = document.createElement('a');
-  	creatorSpan.className = 'story-creator card-title';
-  	creatorSpan.innerHTML = user.name;
-  	creatorSpan.setAttribute('href', '/u/profile?'+user._id);
-  	latestPostCard.appendChild(creatorSpan);
+  const creatorSpan = document.createElement('a');
+  creatorSpan.className = 'story-creator card-title';
+  creatorSpan.innerHTML = user.name;
+  creatorSpan.setAttribute('href', '/u/profile?'+user._id);
+  latestPostCard.appendChild(creatorSpan);
 
 	const latestPost = document.createElement('p');
 	latestPost.className = 'story-content card-text';
-  	latestPost.innerHTML = user.last_post;
-  	latestPostCard.appendChild(latestPost);
+  latestPost.innerHTML = user.last_post;
+  latestPostCard.appendChild(latestPost);
 }
 
 main();
-
-// things to add: cat pictures (choice), last post, favorite cat fact (text input), save button
