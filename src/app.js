@@ -1,8 +1,14 @@
+// load env variables
+require('dotenv').config();
+
 // libraries
 const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
+const socketio = require('socket.io');
+
 
 // local dependencies
 const db = require('./db');
@@ -10,29 +16,20 @@ const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
 
-// fixes cors issue for accessing apis
-const cors = require('cors');
 
 // initialize express app
 const app = express();
-
-// cors set up
-app.use(cors());
-
-// configure socketio
-const socketio = require('socket.io');
-const server = http.Server(app);
-const io = socketio(server);
-app.set('socketio', io);
 
 // set POST request body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// enable CORS requests
+app.use(cors());
+
 // set up sessions
 app.use(session({
-  // TODO: fix secret
-  secret: 'foo',
+  secret: process.env.SESSION_SECRET,
   resave: 'false',
   saveUninitialized: 'true'
 }));
@@ -76,9 +73,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// configure socketio
+const server = http.Server(app);
+const io = socketio(server);
+app.set('socketio', io);
+
 // port config
 const port = process.env.PORT || 3000; // config variable
-// const server = http.Server(app); use same server variable we have above
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
