@@ -6,7 +6,6 @@ const StoryModelSchema = new mongoose.Schema ({
   creator_id    : String,
   creator_name  : String,
   content       : String,
-  comment_ids   : String,
 });
 
 // compile model from schema

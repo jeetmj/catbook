@@ -11,24 +11,17 @@ const router = express.Router();
 
 // api endpoints
 router.get('/whoami', function(req, res) {
-  res.send(req.isAuthenticated() ? req.user : {});
+  if (req.isAuthenticated()){
+    res.send(req.user);
+  }
+  else{
+    res.send({});
+  }
 });
 
 router.get('/user', function(req, res) {
   User.findOne({ _id: req.query._id }, function(err, user) {
     res.send(user);
-  });
-});
-
-router.get('/story', function(req, res) {
-  Story.findOne({ _id: req.query._id }, function(err, story) {
-      User.findOne({ _id: story._id }, function(err,creator) {
-          res.send({
-            creator_id: creator._id,
-            creator_name: creator.name,
-            content: story.content
-          });
-      });
   });
 });
 
