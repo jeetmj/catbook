@@ -27,7 +27,7 @@ function storyDOMObject(storyJSON, user) {
   commentsDiv.className = 'story-comments';
   cardFooter.appendChild(commentsDiv);
 
-  if (user._id)
+  if (user._id !== undefined)
     cardFooter.appendChild(newCommentDOMObject(storyJSON._id));
 
   return card;
@@ -132,7 +132,7 @@ function submitStoryHandler() {
 }
 
 function renderStories(user) {
-  if (user._id)
+  if (user._id !== undefined)
     document.getElementById('new-story').appendChild(newStoryDOMObject());
 
   const storiesDiv = document.getElementById('stories');

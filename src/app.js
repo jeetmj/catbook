@@ -20,7 +20,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// enable CORS requests
+// enable Cross Origin Requests (CORS)
 app.use(cors());
 
 // set up sessions

@@ -1,5 +1,5 @@
 function newNavbarItem(text, url) {
-  itemLink = document.createElement('a');
+  const itemLink = document.createElement('a');
   itemLink.className = 'nav-item nav-link';
   itemLink.innerHTML = text;
   itemLink.href = url;
@@ -13,7 +13,7 @@ function renderNavbar(user) {
   navbarDiv.appendChild(newNavbarItem('Home', '/'));
 
   // NOTE: this check is a lowkey hack
-  if (user._id) {
+  if (user._id !== undefined) {
     navbarDiv.appendChild(newNavbarItem('Profile', '/u/profile?'+user._id));
     navbarDiv.appendChild(newNavbarItem('Logout', '/logout'));
   } else {
