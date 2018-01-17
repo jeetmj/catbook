@@ -8,8 +8,8 @@ const User = require('./models/user');
 // make sure to replace these with the right clients!!
 const oauth_credentials = {
   client: {
-    id: 'your client id from https://oidc.mit.edu/',
-    secret: 'your client secret from https://oidc.mit.edu/'
+    id: process.env.MIT_OPENID_ID,
+    secret: process.env.MIT_OPENID_SECRET
   }
 };
 
