@@ -17,6 +17,6 @@ function renderNavbar(user) {
     navbarDiv.appendChild(newNavbarItem('Profile', '/u/profile?'+user._id));
     navbarDiv.appendChild(newNavbarItem('Logout', '/logout'));
   } else {
-    navbarDiv.appendChild(newNavbarItem('Login', '/auth/facebook'));
+    navbarDiv.appendChild(newNavbarItem('Login', '/auth/oidc'));
   }
 }

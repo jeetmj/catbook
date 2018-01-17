@@ -44,18 +44,12 @@ app.use('/api', api );
 app.use('/static', express.static('public'));
 
 // authentication routes
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/oidc', passport.authenticate('oidc'));
 
-app.get(
-  '/auth/facebook/callback',
-  passport.authenticate(
-    'facebook',
-    { failureRedirect: '/' }
-  ),
-  function(req, res) {
-    res.redirect('/');
-  }
-);
+app.get('/auth/oidc/callback', passport.authenticate('oidc', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
 
 // 404 route
 app.use(function(req, res, next) {
