@@ -43,7 +43,21 @@ app.use('/', views);
 app.use('/api', api );
 app.use('/static', express.static('public'));
 
-// authentication routes
+
+// authentication routes with Facebook
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get(
+  '/auth/facebook/callback',
+  passport.authenticate(
+    'facebook',
+    { failureRedirect: '/' }
+  ),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+// authentication routes with MIT OpenID Connect
 app.get('/auth/oidc', passport.authenticate('oidc'));
 
 app.get('/auth/oidc/callback', passport.authenticate('oidc', {

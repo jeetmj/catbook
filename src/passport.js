@@ -1,18 +1,47 @@
 const passport = require('passport');
+// load user model
+const User = require('./models/user');
+/* First, we make the facebook Authentication */
+const fbp = require('passport-facebook');
+// set up passport configs
+passport.use(new fbp.Strategy({
+  clientID: process.env.FB_CLIENT_ID, // config variables
+  clientSecret: process.env.FB_CLIENT_SECRET,
+  callbackURL: '/auth/facebook/callback'
+}, function(accessToken, refreshToken, profile, done) {
+  User.findOne({
+    'fbid': profile.id
+  }, function(err, user) {
+    if (err) return done(err);
+
+    if (!user) {
+      const user = new User({
+        name: profile.displayName,
+        fbid: profile.id
+      });
+
+      user.save(function(err) {
+        if (err) console.log(err);
+
+        return done(err, user);
+      });
+    } else {
+      return done(err, user);
+    }
+  });
+}));
+
+/* Next, we make the MIT OpenID Connect Authentication */
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 const request = require('request');
 
-// load user model
-const User = require('./models/user');
-// load your client credentials, which are provided by MIT OpenID
-// make sure to replace these with the right clients!!
+// load your MIT OpenID client credentials
 const oauth_credentials = {
   client: {
     id: process.env.MIT_OPENID_ID,
     secret: process.env.MIT_OPENID_SECRET
   }
 };
-
 // create the passport OAuth2.0 parameters
 // these parameters are simply required by OAuth2.0
 const host = 'http://localhost:3000';
@@ -24,19 +53,14 @@ const passport_parameter = {
   callbackURL: host + '/auth/oidc/callback'
 };
 
-
 // set up passport configs
 passport.use('oidc', new OAuth2Strategy(passport_parameter, function (accessToken, refreshToken, profile, done) {
 
-  // the callback of this function is to simply run getUserInformation(),
-  // which is defined below
   getUserInformation();
 
   function getUserInformation() {
     request(buildUserInfoRequestParameter(accessToken), function (error, response, body) {
       if (!error && response.statusCode === 200) {
-        // uncomment the next line to see what your user object looks like
-        // console.log(JSON.parse(body))
         return findOrCreateUser(JSON.parse(body));
       } else {
         return done(new Error('An error occurred while making the access request'));
@@ -83,6 +107,7 @@ passport.use('oidc', new OAuth2Strategy(passport_parameter, function (accessToke
   }
 }));
 
+/* Finally, write / execute those two necessary passport methods */
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
