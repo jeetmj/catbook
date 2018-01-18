@@ -4,32 +4,21 @@ const request = require('request');
 
 // load user model
 const User = require('./models/user');
-// load your client credentials, which are provided by MIT OpenID
-// make sure to replace these with the right clients!!
-const oauth_credentials = {
-  client: {
-    id: process.env.MIT_OPENID_ID,
-    secret: process.env.MIT_OPENID_SECRET
-  }
-};
 
 // create the passport OAuth2.0 parameters
 // these parameters are simply required by OAuth2.0
-const host = 'http://localhost:3000';
 const passport_parameter = {
   authorizationURL: 'https://oidc.mit.edu/authorize',
   tokenURL: 'https://oidc.mit.edu/token',
-  clientID: oauth_credentials.client.id,
-  clientSecret: oauth_credentials.client.secret,
-  callbackURL: host + '/auth/oidc/callback'
+  clientID: process.env.MIT_OPENID_ID,
+  clientSecret: process.env.MIT_OPENID_SECRET,
+  callbackURL: 'http://localhost:3000/auth/oidc/callback'
 };
 
 
 // set up passport configs
 passport.use('oidc', new OAuth2Strategy(passport_parameter, function (accessToken, refreshToken, profile, done) {
 
-  // the callback of this function is to simply run getUserInformation(),
-  // which is defined below
   getUserInformation();
 
   function getUserInformation() {
