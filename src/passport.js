@@ -1,7 +1,9 @@
 const passport = require('passport');
 // load user model
 const User = require('./models/user');
+
 /* First, we make the facebook Authentication */
+
 const fbp = require('passport-facebook');
 // set up passport configs
 passport.use(new fbp.Strategy({
@@ -32,24 +34,18 @@ passport.use(new fbp.Strategy({
 }));
 
 /* Next, we make the MIT OpenID Connect Authentication */
+
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 const request = require('request');
 
-// load your MIT OpenID client credentials
-const oauth_credentials = {
-  client: {
-    id: process.env.MIT_OPENID_ID,
-    secret: process.env.MIT_OPENID_SECRET
-  }
-};
 // create the passport OAuth2.0 parameters
 // these parameters are simply required by OAuth2.0
 const host = 'http://localhost:3000';
 const passport_parameter = {
   authorizationURL: 'https://oidc.mit.edu/authorize',
   tokenURL: 'https://oidc.mit.edu/token',
-  clientID: oauth_credentials.client.id,
-  clientSecret: oauth_credentials.client.secret,
+  clientID: process.env.MIT_OPENID_ID,
+  clientSecret: process.env.MIT_OPENID_SECRET,
   callbackURL: host + '/auth/oidc/callback'
 };
 
@@ -107,7 +103,7 @@ passport.use('oidc', new OAuth2Strategy(passport_parameter, function (accessToke
   }
 }));
 
-/* Finally, write / execute those two necessary passport methods */
+/* Finally, write/execute those two necessary passport methods */
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
