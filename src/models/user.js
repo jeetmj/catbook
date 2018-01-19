@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const UserModelSchema = new mongoose.Schema ({
   name        	: String,
   fbid        	: String,
+  googleid		: String,
   openid        : String,
   last_post   	: String,
   favorite_fact : String,
