@@ -46,7 +46,6 @@ app.use('/static', express.static('public'));
 
 // authentication routes with Facebook
 app.get('/auth/facebook', passport.authenticate('facebook'));
-
 app.get(
   '/auth/facebook/callback',
   passport.authenticate(
@@ -57,13 +56,22 @@ app.get(
     res.redirect('/');
   }
 );
+
 // authentication routes with MIT OpenID Connect
 app.get('/auth/oidc', passport.authenticate('oidc'));
-
 app.get('/auth/oidc/callback', passport.authenticate('oidc', {
   successRedirect: '/',
   failureRedirect: '/'
 }));
+
+// authentication routes with Google
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),
+function(req, res) {
+  // Successful authentication, redirect home.
+  res.redirect('/');
+});
 
 // 404 route
 app.use(function(req, res, next) {

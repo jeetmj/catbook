@@ -18,6 +18,7 @@ function renderNavbar(user) {
     navbarDiv.appendChild(newNavbarItem('Logout', '/logout'));
   } else {
     navbarDiv.appendChild(newNavbarItem('Login with Facebook', '/auth/facebook'));
+    navbarDiv.appendChild(newNavbarItem('Login with Google', '/auth/google'));
     navbarDiv.appendChild(newNavbarItem('Login with MIT Kerberos', '/auth/oidc'));
     
   }

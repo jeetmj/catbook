@@ -33,6 +33,37 @@ passport.use(new fbp.Strategy({
   });
 }));
 
+/* Next, we make the Google Authentication */
+
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
+// set up passport configs
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID, // config variables
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/auth/google/callback'
+}, function(accessToken, refreshToken, profile, done) {
+  User.findOne({
+    'fbid': profile.id
+  }, function(err, user) {
+    if (err) return done(err);
+
+    if (!user) {
+      const user = new User({
+        name: profile.displayName,
+        fbid: profile.id
+      });
+
+      user.save(function(err) {
+        if (err) console.log(err);
+
+        return done(err, user);
+      });
+    } else {
+      return done(err, user);
+    }
+  });
+}));
+
 /* Next, we make the MIT OpenID Connect Authentication */
 
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
