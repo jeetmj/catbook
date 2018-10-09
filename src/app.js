@@ -40,13 +40,13 @@ app.use('/api', api );
 app.use('/static', express.static('public'));
 
 // authentication routes
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
 app.get(
-  '/auth/facebook/callback',
+  '/auth/google/callback',
   passport.authenticate(
-    'facebook',
-    { failureRedirect: '/' }
+    'google',
+    { failureRedirect: '/login' }
   ),
   function(req, res) {
     res.redirect('/');

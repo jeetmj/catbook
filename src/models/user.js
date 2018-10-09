@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // define a schema
 const UserModelSchema = new mongoose.Schema ({
   name        	: String,
-  fbid        	: String,
+  googleid     	: String,
   last_post   	: String,
 });
 
