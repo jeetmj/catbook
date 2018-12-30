@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 // set up mongoDB connection
-const mongoURL = 'mongodb://admin:password@ds237707.mlab.com:37707/catbookdb';
+const mongoURL = 'mongodb+srv://weblab:6jYctMizX5Y5ie6W@catbook-fsjig.mongodb.net/catbookdb?retryWrites=true';
 const options = {
-  useMongoClient: true
+  useNewUrlParser: true
 };
 mongoose.connect(mongoURL, options);
 mongoose.Promise = global.Promise;
