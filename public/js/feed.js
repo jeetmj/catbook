@@ -9,13 +9,13 @@ function storyDOMObject(storyJSON, user) {
 
   const creatorSpan = document.createElement('a');
   creatorSpan.className = 'story-creator card-title';
-  creatorSpan.innerHTML = storyJSON.creator_name;
+  creatorSpan.innerText = storyJSON.creator_name;
   creatorSpan.setAttribute('href', '/u/profile?' + storyJSON.creator_id);
   cardBody.appendChild(creatorSpan);
 
   const contentSpan = document.createElement('p');
   contentSpan.className = 'story-content card-text';
-  contentSpan.innerHTML = storyJSON.content;
+  contentSpan.innerText = storyJSON.content;
   cardBody.appendChild(contentSpan);
 
   const cardFooter = document.createElement('div');
@@ -40,13 +40,13 @@ function commentDOMObject(commentJSON) {
 
   commentCreatorSpan = document.createElement('a');
   commentCreatorSpan.className = 'comment-creator';
-  commentCreatorSpan.innerHTML = commentJSON.creator_name;
+  commentCreatorSpan.innerText = commentJSON.creator_name;
   commentCreatorSpan.setAttribute('href', '/u/profile?' + commentJSON.creator_id);
   commentDiv.appendChild(commentCreatorSpan);
 
   commentContentSpan = document.createElement('span');
   commentContentSpan.className = 'comment-content';
-  commentContentSpan.innerHTML = ' | ' + commentJSON.content;
+  commentContentSpan.innerText = ' | ' + commentJSON.content;
   commentDiv.appendChild(commentContentSpan);
 
   return commentDiv;
