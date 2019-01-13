@@ -14,7 +14,7 @@ function renderUserData(user) {
 	// rendering name
 	const nameContainer = document.getElementById('name-container');
 	const nameHeader = document.createElement('h1');
-	nameHeader.innerHTML = user.name;
+	nameHeader.innerText = user.name;
 	nameContainer.appendChild(nameHeader);
 
 	// rendering profile image
@@ -26,13 +26,13 @@ function renderUserData(user) {
 
   const creatorSpan = document.createElement('a');
   creatorSpan.className = 'story-creator card-title';
-  creatorSpan.innerHTML = user.name;
+  creatorSpan.innerText = user.name;
   creatorSpan.setAttribute('href', '/u/profile?'+user._id);
   latestPostCard.appendChild(creatorSpan);
 
 	const latestPost = document.createElement('p');
 	latestPost.className = 'story-content card-text';
-  latestPost.innerHTML = user.last_post;
+  latestPost.innerText = user.last_post;
   latestPostCard.appendChild(latestPost);
 }
 
