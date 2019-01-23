@@ -5,8 +5,8 @@ const User = require('./models/user');
 
 // set up passport configs
 passport.use(new GoogleStrategy({
-  clientID: '121876641182-2ek68mhau1s556fii5ve1g23ebinbrga.apps.googleusercontent.com', // config variables
-  clientSecret: 'BZEcbkgZLq-JlTodXLIZcdBL',
+  clientID: process.env.GOOGLE_CLIENT_ID, // config variables
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: '/auth/google/callback'
 }, function(accessToken, refreshToken, profile, done) {
   User.findOne({
